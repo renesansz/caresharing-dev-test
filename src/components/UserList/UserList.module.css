@@ -1,0 +1,15 @@
+.userListWrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 30vw;
+}
+
+.userList {
+  list-style: none;
+  min-height: 120px;
+}
+
+.controlWrapper {
+  display: flex;
+  justify-content: space-between;
+}
