@@ -1,39 +1,29 @@
-import { useEffect, useState } from "react";
-import UserContext from "../contexts/UserContext"
-import makeUserDataset from "../utils/userDataChart";
-import fetchUsers from "../api/fetchUsers";
+import { useState } from "react";
+import UserContext from "../contexts/UserContext";
 
 const withUserContext = (WrappedComponent) => {
   const Component = (forwardedProps) => {
+    const { contextInitialValue, ...componentProps } = forwardedProps;
+
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const [getUserDataset, setGetUserDataset] = useState(() => {
+    const [getUserDataset, setUserDataset] = useState(() => {
       return [];
     });
 
-    /**
-     * On inital component mount, we'll fetch the user list from the API.
-    */
-    useEffect(() => {
-      fetchUsers().then((result) => {
-        setUsers(result);
-        setGetUserDataset(() => {
-          // NOTE: Generate seed data for fetching the user dataset later on the chart.
-          return makeUserDataset(result);
-        });
-      });
-    }, []);
-
     const userContextProviderValue = {
       users,
+      setUsers,
       filteredUsers,
       setFilteredUsers,
-      getUserDataset
+      getUserDataset,
+      setUserDataset,
+      ...contextInitialValue
     };
 
     return (
       <UserContext.Provider value={userContextProviderValue}>
-        <WrappedComponent {...forwardedProps} />
+        <WrappedComponent {...componentProps} />
       </UserContext.Provider>
     )
   }

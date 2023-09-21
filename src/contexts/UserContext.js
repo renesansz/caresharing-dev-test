@@ -5,6 +5,7 @@ const UserContext = createContext({
   filteredUsers: [],
   setFilteredUsers: () => {},
   getUserDataset: () => {},
+  setUserDataset: () => {},
 });
 
 export default UserContext;

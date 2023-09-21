@@ -11,5 +11,11 @@ export default defineConfig({
         find: '@', replacement: path.resolve('./src')
       }
     ]
-  }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.js',
+    css: false,
+  },
 })
