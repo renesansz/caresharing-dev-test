@@ -1,32 +1,26 @@
-import { Suspense, useEffect, useState } from 'react';
-import './App.css';
-import UserContext from './contexts/UserContext';
+import { Suspense, lazy } from 'react';
 import UserList from './components/UserList';
-import fetchUsers from './api/fetchUsers';
+
+import './App.css';
+import withUserContext from './hocs/withUserContext';
+
+// NOTE: Let's lazy load this component since it has heavy dependencies.
+const LazyDataChart = lazy(() => import("./components/DataChart"));
 
 function App() {
-  const [users, setUsers] = useState([]);
-
-  const userContextProviderValue = {
-    users,
-  };
-
-  /**
-   * On inital component mount, we'll fetch the user list from the API.
-  */
-  useEffect(() => {
-    fetchUsers().then((result) => {
-      setUsers(result);
-    });
-  }, []);
-
   return (
-    <UserContext.Provider value={userContextProviderValue}>
+    <>
+      <Suspense fallback={<h1>Initializing chart...</h1>}>
+        <LazyDataChart />
+      </Suspense>
+      <br />
       <Suspense fallback={<h1>Fetching users...</h1>}>
         <UserList />
       </Suspense>
-    </UserContext.Provider>
+    </>
   );
 }
 
-export default App
+const AppWithContext = withUserContext(App);
+
+export default AppWithContext;

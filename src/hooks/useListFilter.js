@@ -22,6 +22,8 @@ export default function useListFilter(list = [], searchFilter = '') {
       /**
        * NOTE: I think the repetitive usage of `.toLowerCase` can still be improved 🤔
        * I don't think refactoring this can bring noticeable performance improvement, so let's continue with this for now...
+       *
+       * ANOTHER NOTE: Make search filter case insensitive
       */
       if (doesItemHaveNameProperty(item)) {
         return item.name.toLowerCase().indexOf(searchFilter.toLowerCase()) >= 0;

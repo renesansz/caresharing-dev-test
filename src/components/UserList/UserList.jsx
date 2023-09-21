@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import UserContext from "@/contexts/UserContext";
 import useListFilter from "@/hooks/useListFilter";
@@ -9,7 +9,7 @@ import styles from "./UserList.module.css";
 export default function UserList() {
   const [searchFilter, setSearchFilter] = useState('');
 
-  const { users } = useContext(UserContext);
+  const { users, setFilteredUsers } = useContext(UserContext);
   /**
    * We'll break down the logic for filtering and paginating the list.
    * This way, it will be easy for us to separate the concerns for implementing a dynamic list.
@@ -30,11 +30,19 @@ export default function UserList() {
     setSearchFilter(evt.target.value);
   };
 
+  const onUsernameClicked = (username) => {
+    setSearchFilter(username);
+  };
+
+  useEffect(() => {
+    setFilteredUsers(userList);
+  }, [setFilteredUsers, userList]);
+
   return (
     <div className={styles.userListWrapper}>
       <input value={searchFilter} onChange={onSearchFieldChanged} placeholder="Filter user name..." />
       <ul className={styles.userList}>
-        {userList.map((user) => <li key={user.id}>{user.name}</li>)}
+        {userList.map((user) => <li key={user.id} onClick={() => onUsernameClicked(user.name)}>{user.name}</li>)}
       </ul>
       <div className={styles.controlWrapper}>
         <button onClick={prevPage}>&lt;</button>

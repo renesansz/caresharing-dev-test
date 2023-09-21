@@ -22,8 +22,8 @@ export default function useListPagination(list = []) {
   );
 
   /**
-   * NOTE: When the list changes we have to reset the current page to `.slice` the list correctly.
-   * Otherwise, search filter won't show the correct results for page 2 and above.
+   * NOTE: When the list changes we have to reset the current page to 1.
+   *       Otherwise, search filter won't show the correct results for page 2 and above.
   */
   useEffect(() => {
     setCurrentPage(1);

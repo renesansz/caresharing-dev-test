@@ -8,6 +8,9 @@
   list-style: none;
   min-height: 120px;
 }
+.userList li {
+  cursor: pointer;
+}
 
 .controlWrapper {
   display: flex;
