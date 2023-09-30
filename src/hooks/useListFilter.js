@@ -26,9 +26,9 @@ export default function useListFilter(list = [], searchFilter = '') {
        * ANOTHER NOTE: Make search filter case insensitive
       */
       if (doesItemHaveNameProperty(item)) {
-        return item.name.toLowerCase().indexOf(searchFilter.toLowerCase()) >= 0;
+        return item.name.toLowerCase().includes(searchFilter.toLowerCase());
       } else if (typeof item === "string") {
-        return item.toLowerCase().indexOf(searchFilter.toLowerCase()) >= 0;
+        return item.toLowerCase().includes(searchFilter.toLowerCase());
       }
       return false;
     }),
