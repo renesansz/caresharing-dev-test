@@ -14,8 +14,8 @@ const MIN_PAGE = 1;
 export default function useListPagination(list = []) {
   const [currentPage, setCurrentPage] = useState(MIN_PAGE);
 
-  const startIdx = useMemo(() => currentPage * ITEM_PER_PAGE - ITEM_PER_PAGE, [currentPage]);
-  const maxPage = useMemo(() => Math.ceil(list.length / ITEM_PER_PAGE) || MIN_PAGE, [list]);
+  const startIdx = currentPage * ITEM_PER_PAGE - ITEM_PER_PAGE;
+  const maxPage = Math.ceil(list.length / ITEM_PER_PAGE) || MIN_PAGE;
   const paginatedList = useMemo(
     () => list.slice(startIdx, startIdx + ITEM_PER_PAGE),
     [list, startIdx]
